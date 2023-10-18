@@ -1,6 +1,6 @@
 import { Outlet, NavLink, Link } from "react-router-dom";
 
-import github from "../../assets/github.svg";
+import logo from "../../assets/logo.png";
 
 import styles from "./Layout.module.css";
 
@@ -14,7 +14,8 @@ const Layout = () => {
             <header className={styles.header} role={"banner"}>
                 <div className={styles.headerContainer}>
                     <Link to="/" className={styles.headerTitleContainer}>
-                        <h3 className={styles.headerTitle}>GPT + Enterprise data | Sample</h3>
+                        <img src={logo} width="200px" />
+                        {/* <h3 className={styles.headerTitle}>Kiosk + GPT3</h3> */}
                     </Link>
                     <nav>
                         <ul className={styles.headerNavList}>
@@ -23,7 +24,7 @@ const Layout = () => {
                                     Chat
                                 </NavLink>
                             </li>
-                            <li className={styles.headerNavLeftMargin}>
+                            {/* <li className={styles.headerNavLeftMargin}>
                                 <NavLink to="/qa" className={({ isActive }) => (isActive ? styles.headerNavPageLinkActive : styles.headerNavPageLink)}>
                                     Ask a question
                                 </NavLink>
@@ -39,10 +40,10 @@ const Layout = () => {
                                         className={styles.githubLogo}
                                     />
                                 </a>
-                            </li>
+                            </li> */}
                         </ul>
                     </nav>
-                    <h4 className={styles.headerRightText}>Azure OpenAI + Cognitive Search</h4>
+                    <h4 className={styles.headerRightText}>Powered by OpenAI + GPT 3.5</h4>
                     {useLogin && <LoginButton />}
                 </div>
             </header>

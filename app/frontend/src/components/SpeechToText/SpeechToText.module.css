@@ -6,6 +6,8 @@
     gap: 10px;
     flex: 1;
     justify-content: center;
+    max-width: 1024px;
+    /* font-size: 16px; */
 }
 
 .example {
@@ -14,7 +16,7 @@
     border-radius: 8px;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 18px;
     margin-bottom: 5px;
     cursor: pointer;
 }
@@ -28,14 +30,23 @@
 
 .exampleText {
     margin: 0;
-    font-size: 18px;
+    font-size: 22px;
     width: 280px;
     height: 100px;
 }
 
 @media only screen and (max-height: 780px) {
     .exampleText {
-        font-size: 16px;
-        height: 80px;
+        font-size: 18px;
+        height: 65px;
     }
+}
+
+.sttButton {
+    display: flex;
+    align-self: flex-end;
+    border: none;
+    background-color: inherit;
+    margin-right: 20px;
+    cursor: pointer;
 }

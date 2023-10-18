@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Stack, TextField } from "@fluentui/react";
 import { Button, Tooltip, Field, Textarea } from "@fluentui/react-components";
 import { Send28Filled } from "@fluentui/react-icons";
-
+import { SpeechToText, MyComponentRef } from "../SpeechToText";
+import { Tooltip as ReactTooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 import styles from "./QuestionInput.module.css";
 
 interface Props {
@@ -14,6 +16,7 @@ interface Props {
 
 export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend }: Props) => {
     const [question, setQuestion] = useState<string>("");
+    const childRef = useRef<MyComponentRef>(null);
 
     const sendQuestion = () => {
         if (disabled || !question.trim()) {
@@ -22,6 +25,7 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend }: Pr
 
         onSend(question);
 
+        if (childRef && childRef.current) childRef.current.StopAndReset();
         if (clearOnSend) {
             setQuestion("");
         }
@@ -57,9 +61,23 @@ export const QuestionInput = ({ onSend, disabled, placeholder, clearOnSend }: Pr
                 onKeyDown={onEnterPress}
             />
             <div className={styles.questionInputButtonsContainer}>
+                {/* <>
+                    <SpeechToText ref={childRef} updateParent={text => setQuestion(text)} />
+                    <ReactTooltip anchorId="uploadButton" place="top" content="Upload PDF" />
+                    <div className={styles.uploadbutton} id="uploadButton" onClick={() => setTextSearch(!TextSearch)}>
+                        <img src="./upload.svg" alt="" title="" />
+                    </div>
+                </> */}
                 <Tooltip content="Ask question button" relationship="label">
                     <Button size="large" icon={<Send28Filled primaryFill="rgba(115, 118, 225, 1)" />} disabled={sendQuestionDisabled} onClick={sendQuestion} />
                 </Tooltip>
+                {/* <div
+                    className={`${styles.questionInputSendButton} ${sendQuestionDisabled ? styles.questionInputSendButtonDisabled : ""}`}
+                    aria-label="Ask question button"
+                    onClick={sendQuestion}
+                >
+                    <Send28Filled primaryFill="rgba(115, 118, 225, 1)" />
+                </div> */}
             </div>
         </Stack>
     );

@@ -1,4 +1,5 @@
 {
+  "recommendations": ["esbenp.prettier-vscode", "ms-azuretools.azure-dev"]
     "recommendations": [
         "ms-azuretools.azure-dev",
         "ms-azuretools.vscode-bicep",
