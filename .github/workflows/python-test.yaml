@@ -5,6 +5,8 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  schedule:
+    - cron: '0 0 * * *' # Run at midnight every day
 
 jobs:
   test_package:
@@ -37,10 +39,12 @@ jobs:
             pip install -r requirements-dev.txt
         - name: Lint with ruff
           run: ruff .
+        - name: Check types with mypy
+          run: python3 -m mypy scripts/ app/
         - name: Check formatting with black
           run: black . --check --verbose
         - name: Run Python tests
-          run: python3 -m pytest --cov
+          run: python3 -m pytest --cov --cov-fail-under=78
         - name: Run E2E tests with Playwright
           run: |
             playwright install --with-deps
