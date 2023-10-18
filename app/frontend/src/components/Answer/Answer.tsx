@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Stack, IconButton } from "@fluentui/react";
 import DOMPurify from "dompurify";
 
@@ -7,6 +7,7 @@ import styles from "./Answer.module.css";
 import { ChatAppResponse, getCitationFilePath } from "../../api";
 import { parseAnswerToHtml } from "./AnswerParser";
 import { AnswerIcon } from "./AnswerIcon";
+import { useTts } from "tts-react";
 
 interface Props {
     answer: ChatAppResponse;
@@ -33,13 +34,41 @@ export const Answer = ({
     const parsedAnswer = useMemo(() => parseAnswerToHtml(messageContent, isStreaming, onCitationClicked ), [answer]);
 
     const sanitizedAnswerHtml = DOMPurify.sanitize(parsedAnswer.answerHtml);
-
+    const { play, stop } = useTts({ children: sanitizedAnswerHtml, onEnd: stopIt, markTextAsSpoken: true });
+    const [isReading, setIsReading] = useState<boolean>(false);
+    function readIt() {
+        setIsReading(true);
+        play();
+    }
+    function stopIt() {
+        setIsReading(false);
+        stop();
+    }
     return (
         <Stack className={`${styles.answerContainer} ${isSelected && styles.selected}`} verticalAlign="space-between">
             <Stack.Item>
                 <Stack horizontal horizontalAlign="space-between">
                     <AnswerIcon />
                     <div>
+                        {isReading ? (
+                            <IconButton
+                                style={{ color: "black" }}
+                                iconProps={{ iconName: "CircleStopSolid" }}
+                                title="Read the response"
+                                ariaLabel="Read the response"
+                                onClick={() => stopIt()}
+                                disabled={!answer.thoughts}
+                            />
+                        ) : (
+                            <IconButton
+                                style={{ color: "black" }}
+                                iconProps={{ iconName: "Volume3" }}
+                                title="Read the response"
+                                ariaLabel="Read the response"
+                                onClick={() => readIt()}
+                                disabled={!answer.thoughts}
+                            />
+                        )}
                         <IconButton
                             style={{ color: "black" }}
                             iconProps={{ iconName: "Lightbulb" }}

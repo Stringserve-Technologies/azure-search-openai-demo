@@ -298,8 +298,8 @@ urllib3==2.0.7
     # via requests
 uvicorn[standard]==0.23.2
     # via -r requirements.in
-uvloop==0.17.0
-    # via uvicorn
+# uvloop==0.17.0
+#     # via uvicorn
 watchfiles==0.20.0
     # via uvicorn
 websockets==11.0.3
